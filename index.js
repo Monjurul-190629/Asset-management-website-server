@@ -219,6 +219,13 @@ async function run() {
             res.send(result);
         })
 
+        // asset post
+        app.post('/assets', async(req, res) => {
+            const value = req.body;
+            const result = await assetCollection.insertOne(value);
+            res.send(result);
+        })
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
