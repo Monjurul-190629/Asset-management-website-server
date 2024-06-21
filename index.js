@@ -34,6 +34,7 @@ async function run() {
         const userCollection = client.db("ServiceProviderDB").collection('users');
         const paymentCollection = client.db("ServiceProviderDB").collection("payments");
         const companyCollection = client.db("ServiceProviderDB").collection("company");
+        const assetCollection = client.db("ServiceProviderDB").collection("AssetColletion");
 
 
         // jwt related api
@@ -209,6 +210,13 @@ async function run() {
             console.log(updateDoc)
             const result = await userCollection.updateOne(filter, updateDoc, options);
             res.send(result)
+        })
+
+
+        //// Asset section
+        app.get('/assets', async (req, res) => {
+            const result = await assetCollection.find().toArray();
+            res.send(result);
         })
 
 
