@@ -274,6 +274,44 @@ async function run() {
             const result = await requestedAsset.find().toArray();
             res.send(result);
         })
+
+        app.get('/requestAsset/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id : new ObjectId(id)}
+            console.log(query)
+            const result = await requestedAsset.findOne(query)
+            res.send(result)
+        });
+
+        /// for update
+        app.put('/requestAsset/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const data = req.body;
+            const updateDoc = {
+                $set: {
+                    Asset_image : data.Assest_image,
+                    Asset_name : data.Asset_name,
+                    Asset_type : data.Asset_type,
+                    useName : data.useName,
+                    userEmail : data.userEmail,
+                    requestDate : data.requestDate,
+                    additionalNotes : data.additionalNotes,
+                    requestStatus : data.requestStatus,
+                    ApprovalDate : data.ApprovalDate 
+                },
+            };
+            const result = await requestedAsset.updateOne(filter, updateDoc, options);
+            res.send(result)
+        })
+
+        app.delete('/requestAsset/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await requestedAsset.deleteOne(query)
+            res.send(result)
+        })
         
 
 
