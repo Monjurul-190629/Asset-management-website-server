@@ -242,7 +242,24 @@ async function run() {
             const result = await assetCollection.deleteOne(query)
             res.send(result)
         })
-        
+        /// for update
+        app.put('/assets/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const data = req.body;
+            const updateDoc = {
+                $set: {
+                    Product_name : data.Product_name,
+                    Product_Quantity : data.Product_Quantity,
+                    Product_type : data.Product_type,
+                    Date_added : data.Date_added,
+                    Assest_image: data.Assest_image
+                },
+            };
+            const result = await assetCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
+        })
         
 
 
