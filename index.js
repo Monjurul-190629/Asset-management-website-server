@@ -35,7 +35,7 @@ async function run() {
         const paymentCollection = client.db("ServiceProviderDB").collection("payments");
         const companyCollection = client.db("ServiceProviderDB").collection("company");
         const assetCollection = client.db("ServiceProviderDB").collection("AssetColletion");
-
+        const requestedAsset = client.db("ServiceProviderDB").collection("RequestedAsset");
 
         // jwt related api
         app.post('/jwt', async (req, res) => {
@@ -259,6 +259,20 @@ async function run() {
             };
             const result = await assetCollection.updateOne(filter, updateDoc, options);
             res.send(result)
+        })
+
+
+        /// requested term
+        app.post('/requestAsset', async(req, res) => {
+            const value = req.body;
+            const result = await requestedAsset.insertOne(value);
+            res.send(result);
+        })
+
+        
+        app.get('/requestAsset', async (req, res) => {
+            const result = await requestedAsset.find().toArray();
+            res.send(result);
         })
         
 
