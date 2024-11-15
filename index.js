@@ -82,7 +82,7 @@ async function run() {
             res.send(result);
         })
 
-        /// manager
+        /// managr
         app.get('/users/manager/:email', async (req, res) => {
             const email = req.params.email;
 
